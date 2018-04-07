@@ -116,6 +116,28 @@ eval("const screens = __webpack_require__(/*! ./screens */ \"./game/scripts/scre
 
 /***/ }),
 
+/***/ "./game/scripts/gameObjects/cell.js":
+/*!******************************************!*\
+  !*** ./game/scripts/gameObjects/cell.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("let cellType = {\n    blank: 0,\n    obstacle: 1,\n    food: 2,\n    snake: 3,\n    wall: 4\n}\n\nmodule.exports = {\n    cellType\n}\n\n//# sourceURL=webpack:///./game/scripts/gameObjects/cell.js?");
+
+/***/ }),
+
+/***/ "./game/scripts/gameObjects/grid.js":
+/*!******************************************!*\
+  !*** ./game/scripts/gameObjects/grid.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const cell = __webpack_require__(/*! ./cell */ \"./game/scripts/gameObjects/cell.js\");\ncells = [];\n\nfunction initialize() {\n    for(let i = 0; i < 50; i++) {\n        let row = [];\n        for(let j = 0; j < 50; j++) {\n            if(i == 0 || i == 49 || j == 0 || j == 49) {\n                row.push(cell.cellType.wall);\n            } else {\n                row.push(cell.cellType.blank);\n            }\n        }\n        cells.push(row);\n    }\n}\n\nmodule.exports = {\n    initialize,\n    cells\n}\n\n//# sourceURL=webpack:///./game/scripts/gameObjects/grid.js?");
+
+/***/ }),
+
 /***/ "./game/scripts/gameplay.js":
 /*!**********************************!*\
   !*** ./game/scripts/gameplay.js ***!
@@ -123,7 +145,7 @@ eval("const screens = __webpack_require__(/*! ./screens */ \"./game/scripts/scre
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const graphics = __webpack_require__(/*! ../../framework/graphics */ \"./framework/graphics.js\");\r\nconst input = __webpack_require__(/*! ../../framework/input */ \"./framework/input.js\");\r\nconst showScreen = __webpack_require__(/*! ./showScreen */ \"./game/scripts/showScreen.js\");\r\nconst mainMenu = __webpack_require__(/*! ./mainmenu */ \"./game/scripts/mainmenu.js\");\r\n\r\nvar mouseCapture = false,\r\n\tmyMouse = input.Mouse(),\r\n\tmyKeyboard = input.Keyboard(),\r\n\tmyTexture = null,\r\n\tcancelNextRequest = false,\r\n\tlastTimeStamp;\r\n\r\nfunction initialize() {\r\n\tconsole.log('game initializing...');\r\n\r\n\t// Create the keyboard input handler and register the keyboard commands\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_A, myTexture.moveLeft);\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_D, myTexture.moveRight);\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_W, myTexture.moveUp);\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_S, myTexture.moveDown);\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_Q, myTexture.rotateLeft);\r\n\t// myKeyboard.registerCommand(KeyEvent.DOM_VK_E, myTexture.rotateRight);\r\n\tmyKeyboard.registerCommand(input.KeyEvent.DOM_VK_ESCAPE, function() {\r\n\r\n\t\t// Stop the game loop by canceling the request for the next animation frame\r\n\t\tcancelNextRequest = true;\r\n\r\n\t\t// Then, return to the main menu\r\n\t\tshowScreen(mainMenu);\r\n\t});\r\n\t\r\n\t// Create an ability to move the logo using the mouse\r\n\tmyMouse = input.Mouse();\r\n\tmyMouse.registerCommand('mousedown', function(e) {\r\n\t\tmouseCapture = true;\r\n\t\t// myTexture.moveTo({x: e.clientX, y: e.clientY});\r\n\t});\r\n\r\n\tmyMouse.registerCommand('mouseup', function() {\r\n\t\tmouseCapture = false;\r\n\t});\r\n\r\n\tmyMouse.registerCommand('mousemove', function(e) {\r\n\t\tif (mouseCapture) {\r\n\t\t\t// myTexture.moveTo({x: e.clientX, y: e.clientY});\r\n\t\t}\r\n\t});\r\n}\r\n\r\nfunction update(elapsedTime) {\r\n\tmyKeyboard.update(elapsedTime);\r\n\tmyMouse.update(elapsedTime);\r\n}\r\n\r\nfunction render() {\r\n\tgraphics.clear();\r\n\t// myTexture.draw();\r\n}\r\n\r\n//------------------------------------------------------------------\r\n//\r\n// This is the Game Loop function!\r\n//\r\n//------------------------------------------------------------------\r\nfunction gameLoop(time) {\r\n\t\r\n\tupdate(time - lastTimeStamp);\r\n\tlastTimeStamp = time;\r\n\t\r\n\trender();\r\n\r\n\tif (!cancelNextRequest) {\r\n\t\trequestAnimationFrame(gameLoop);\r\n\t}\r\n}\r\n\r\nfunction run() {\r\n\tlastTimeStamp = performance.now();\r\n\r\n\t// Start the animation loop\r\n\tcancelNextRequest = false;\r\n\trequestAnimationFrame(gameLoop);\r\n}\r\n\r\nmodule.exports = {\r\n\tinitialize: initialize,\r\n\trun: run,\r\n\tid: 'game-play'\r\n};\r\n\n\n//# sourceURL=webpack:///./game/scripts/gameplay.js?");
+eval("const graphics = __webpack_require__(/*! ../../framework/graphics */ \"./framework/graphics.js\");\r\nconst input = __webpack_require__(/*! ../../framework/input */ \"./framework/input.js\");\r\nconst showScreen = __webpack_require__(/*! ./showScreen */ \"./game/scripts/showScreen.js\");\r\nconst mainMenu = __webpack_require__(/*! ./mainmenu */ \"./game/scripts/mainmenu.js\");\r\n\r\nconst grid = __webpack_require__(/*! ./gameObjects/grid */ \"./game/scripts/gameObjects/grid.js\");\r\n\r\nvar myKeyboard = input.Keyboard(),\r\n    cancelNextRequest = false,\r\n    lastTimeStamp;\r\n\r\nfunction initialize() {\r\n    console.log('game initializing...');\r\n\r\n    grid.initialize();\r\n\r\n    // Create the keyboard input handler and register the keyboard commands\r\n    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_LEFT, function(){});\r\n    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_RIGHT, function(){});\r\n    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_UP, function(){});\r\n    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_DOWN, function(){});\r\n    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_ESCAPE, function() { cancelNextRequest = true; showScreen(mainMenu); });\r\n}\r\n\r\nfunction update(elapsedTime) {\r\n    myKeyboard.update(elapsedTime);\r\n}\r\n\r\nfunction render() {\r\n    graphics.clear();\r\n}\r\n\r\n//------------------------------------------------------------------\r\n//\r\n// This is the Game Loop function!\r\n//\r\n//------------------------------------------------------------------\r\nfunction gameLoop(time) {\r\n    \r\n    update(time - lastTimeStamp);\r\n    lastTimeStamp = time;\r\n    \r\n    render();\r\n\r\n    if (!cancelNextRequest) {\r\n        requestAnimationFrame(gameLoop);\r\n    }\r\n}\r\n\r\nfunction run() {\r\n    lastTimeStamp = performance.now();\r\n\r\n    // Start the animation loop\r\n    cancelNextRequest = false;\r\n    requestAnimationFrame(gameLoop);\r\n}\r\n\r\nmodule.exports = {\r\n    initialize: initialize,\r\n    run: run,\r\n    id: 'game-play'\r\n};\r\n\n\n//# sourceURL=webpack:///./game/scripts/gameplay.js?");
 
 /***/ }),
 
