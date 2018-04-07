@@ -38,8 +38,8 @@ function drawCircle({
 function drawRectangle({
 	x = 0,
 	y = 0,
-	w = 100,
-	h = 100,
+	w = 20,
+	h = 20,
 	fill = '#000000',
 	stroke = '#000000',
 } = {}) {

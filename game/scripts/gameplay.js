@@ -4,6 +4,7 @@ const showScreen = require('./showScreen');
 const mainMenu = require('./mainmenu');
 
 const grid = require('./gameObjects/grid');
+const snake = require('./gameObjects/snake');
 
 var myKeyboard = input.Keyboard(),
     cancelNextRequest = false,
@@ -13,21 +14,25 @@ function initialize() {
     console.log('game initializing...');
 
     grid.initialize();
+    snake.initialize();
 
     // Create the keyboard input handler and register the keyboard commands
-    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_LEFT, function(){});
-    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_RIGHT, function(){});
-    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_UP, function(){});
-    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_DOWN, function(){});
+    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_LEFT, function(){ snake.changeDirection('left')});
+    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_RIGHT, function(){ snake.changeDirection('right')});
+    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_UP, function(){ snake.changeDirection('up')});
+    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_DOWN, function(){ snake.changeDirection('down')});
     myKeyboard.registerCommand(input.KeyEvent.DOM_VK_ESCAPE, function() { cancelNextRequest = true; showScreen(mainMenu); });
 }
 
 function update(elapsedTime) {
     myKeyboard.update(elapsedTime);
+    snake.update();
 }
 
 function render() {
     graphics.clear();
+    grid.render();
+    snake.render();
 }
 
 //------------------------------------------------------------------
