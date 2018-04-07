@@ -28,7 +28,6 @@ function initialize() {
     myKeyboard.registerCommand(input.KeyEvent.DOM_VK_RIGHT, function(){ snake.changeDirection('right')});
     myKeyboard.registerCommand(input.KeyEvent.DOM_VK_UP, function(){ snake.changeDirection('up')});
     myKeyboard.registerCommand(input.KeyEvent.DOM_VK_DOWN, function(){ snake.changeDirection('down')});
-    myKeyboard.registerCommand(input.KeyEvent.DOM_VK_ESCAPE, gameOver);
 }
 
 function gameOver() {
@@ -55,8 +54,8 @@ function gameOver() {
         }
         ls.set('highscores', {field: 'scores', value: highscores.scores});
     }
-    showScreen(highScores);
     initialize();
+    showScreen(highScores);
 }
 
 function gameUpdate(elapsedTime) {
