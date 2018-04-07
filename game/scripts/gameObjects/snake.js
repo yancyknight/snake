@@ -65,15 +65,16 @@ function move() {
 }
 
 function update(elapsedTime) {
-    if(!currentDirection) return;
+    if(!currentDirection) return true;
     
     move();
+
     let head = cells[cells.length -1];
 
     // If you hit an obstacle or a wall
     if(grid.cells[head.row][head.col] == cell.cellType.obstacle || grid.cells[head.row][head.col] == cell.cellType.wall) {
         currentDirection = '';
-        // GAME OVER
+        return false;
     }
 
     // If you hit a food
@@ -85,6 +86,7 @@ function update(elapsedTime) {
         let newFood = getBlankCell();
         grid.cells[newFood.row][newFood.col] = cell.cellType.food;
     }
+    return true;
 }
 
 function render() {

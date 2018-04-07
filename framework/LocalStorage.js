@@ -1,28 +1,24 @@
 'use strict';
 
-function getSettings(path) {
+function get(path) {
     let settingsString = localStorage.getItem(path);
     if (settingsString === null) {
-        // console.log("setting settings");
         return {};
     }
     else {
-        // console.log("settings: " + settingsString);
         return JSON.parse(settingsString);
     }
 }
 
-function setSettings(path, {
+function set(path, {
     field,
     value
 } = {}) {
     let settingsString = localStorage.getItem(path);
     if (settingsString === null) {
-        // console.log("setting settings");
         var settings = {};
     }
     else {
-        // console.log("settings: " + settingsString);
         var settings = JSON.parse(settingsString);
     }
     settings[field] = value;
@@ -30,7 +26,7 @@ function setSettings(path, {
     return settings;
 }
 
-function removeSetting(path, setting) {
+function remove(path, setting) {
     let settingsString = localStorage.getItem(path);
     if (settingsString === null) {
         return;
@@ -40,14 +36,14 @@ function removeSetting(path, setting) {
     localStorage.setItem(path, JSON.stringify(settings));
 }
 
-function removeAllSettings(path) {
+function removeAll(path) {
     localStorage.removeItem(path);
 }
 
 
 module.exports = {
-    getSettings,
-    setSettings,
-    removeSetting,
-    removeAllSettings
+    get,
+    set,
+    remove,
+    removeAll
 };

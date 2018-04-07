@@ -5,11 +5,23 @@ function initialize() {
 	document.getElementById('id-high-scores-back').addEventListener(
 		'click',
 		function() { showScreen(mainMenu); });
+	document.getElementById('highscores-reset').addEventListener(
+		'click',
+		function() { require('../../framework/LocalStorage').set('highscores', {field: 'scores', value: []}); run();});
 }
 
 function run() {
-	//
-	// I know this is empty, there isn't anything to do.
+	const ls = require('../../framework/LocalStorage');
+	
+	let highscores = ls.get('highscores');
+	if(typeof highscores.scores == 'undefined') highscores.scores = [];
+
+	var str = '';
+	for (let i = 0; i < highscores.scores.length; i++) {
+		str += `<li>${highscores.scores[i].name} - ${highscores.scores[i].score}</li>`
+	}
+	let ol = document.getElementById('highscores-ol');
+	ol.innerHTML = str;
 }
 
 module.exports = {

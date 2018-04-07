@@ -14,10 +14,6 @@ function initialize() {
 		'click',
 		function() { showScreen(highScores); });
 	
-	document.getElementById('id-help').addEventListener(
-		'click',
-		function() { showScreen(help); });
-	
 	document.getElementById('id-about').addEventListener(
 		'click',
 		function() { showScreen(about); });
