@@ -1,0 +1,5 @@
+**/.cache
+**/node_modules
+**/.vs_code
+**/package-lock.json
+webpack.config.js
