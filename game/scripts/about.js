@@ -1,10 +1,10 @@
-const game = require('./game');
-const showScreen = require('./showScreen');
 
 function initialize() {
+	const showScreen = require('./showScreen');
+	const mainMenu = require('./mainmenu');
 	document.getElementById('id-about-back').addEventListener(
 		'click',
-		function() { showScreen('main-menu'); });
+		function() { showScreen(mainMenu); });
 }
 
 function run() {
@@ -13,6 +13,7 @@ function run() {
 }
 
 module.exports = {
-	initialize : initialize,
-	run : run
+	initialize: initialize,
+	run: run,
+	id: 'about'
 };

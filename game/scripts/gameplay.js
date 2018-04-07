@@ -1,7 +1,7 @@
-const game = require('./game');
 const graphics = require('../../framework/graphics');
 const input = require('../../framework/input');
 const showScreen = require('./showScreen');
+const mainMenu = require('./mainmenu');
 
 var mouseCapture = false,
 	myMouse = input.Mouse(),
@@ -21,20 +21,19 @@ function initialize() {
 	// myKeyboard.registerCommand(KeyEvent.DOM_VK_Q, myTexture.rotateLeft);
 	// myKeyboard.registerCommand(KeyEvent.DOM_VK_E, myTexture.rotateRight);
 	myKeyboard.registerCommand(input.KeyEvent.DOM_VK_ESCAPE, function() {
-		//
+
 		// Stop the game loop by canceling the request for the next animation frame
 		cancelNextRequest = true;
-		//
+
 		// Then, return to the main menu
-		showScreen('main-menu');
+		showScreen(mainMenu);
 	});
 	
-	//
 	// Create an ability to move the logo using the mouse
 	myMouse = input.Mouse();
 	myMouse.registerCommand('mousedown', function(e) {
 		mouseCapture = true;
-		// myTexture.moveTo({x : e.clientX, y : e.clientY});
+		// myTexture.moveTo({x: e.clientX, y: e.clientY});
 	});
 
 	myMouse.registerCommand('mouseup', function() {
@@ -43,7 +42,7 @@ function initialize() {
 
 	myMouse.registerCommand('mousemove', function(e) {
 		if (mouseCapture) {
-			// myTexture.moveTo({x : e.clientX, y : e.clientY});
+			// myTexture.moveTo({x: e.clientX, y: e.clientY});
 		}
 	});
 }
@@ -77,13 +76,14 @@ function gameLoop(time) {
 
 function run() {
 	lastTimeStamp = performance.now();
-	//
+
 	// Start the animation loop
 	cancelNextRequest = false;
 	requestAnimationFrame(gameLoop);
 }
 
 module.exports = {
-	initialize : initialize,
-	run : run
+	initialize: initialize,
+	run: run,
+	id: 'game-play'
 };

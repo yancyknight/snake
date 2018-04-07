@@ -57,10 +57,10 @@ Breakout.random = (function() {
 	}
 	
 	return {
-		nextDouble : nextDouble,
-		nextRange : nextRange,
-		nextCircleVector : nextCircleVector,
-		nextGaussian : nextGaussian
+		nextDouble: nextDouble,
+		nextRange: nextRange,
+		nextCircleVector: nextCircleVector,
+		nextGaussian: nextGaussian
 	};
 	
 }());

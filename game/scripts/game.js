@@ -1,5 +1,6 @@
 const screens = require('./screens');
 const showScreen = require('./showScreen');
+const mainMenu = require('./mainmenu');
 
 //------------------------------------------------------------------
 //
@@ -17,7 +18,7 @@ function initialize() {
 	}
 	
 	// Make the main-menu screen the active one
-	showScreen('main-menu');
+	showScreen(mainMenu);
 }
 
 window.onload = function() {

@@ -4,6 +4,8 @@ body {
 }
 
 #fw-canvas {
+	position: absolute;
+	left: 300px;
 	width: 800px;
 	height: 600px;
 	background-color: #0404B4;
