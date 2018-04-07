@@ -15,12 +15,12 @@ let colors = [
     // obstacle
     {
         fill: 'rgb(0,255,0)',
-        stroke: 'rgb(0,255,0)'
+        stroke: '#000'
     },
     // food
     {
         fill: '#ff9900',
-        stroke: '#ff9900'
+        stroke: '#000'
     },
     // snake
     {

@@ -73,8 +73,14 @@ function update(elapsedTime) {
 
     // If you hit an obstacle or a wall
     if(grid.cells[head.row][head.col] == cell.cellType.obstacle || grid.cells[head.row][head.col] == cell.cellType.wall) {
-        currentDirection = '';
         return false;
+    }
+
+    // If you hit yourself
+    for (let i = 0; i < cells.length - 1; i++) {
+        if(cells[i].row == head.row && cells[i].col == head.col) {
+            return false;
+        }
     }
 
     // If you hit a food

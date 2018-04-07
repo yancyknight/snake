@@ -12,12 +12,16 @@ let cancelNextRequest = false;
 let lastTimeStamp;
 let moveInterval = 150;
 let timeSinceLastMove = 0;
+let render = null;
+let update = null;
 
 function initialize() {
     console.log('game initializing...');
 
     grid.initialize();
     snake.initialize();
+    render = countdownRender;
+    update = countdownUpdate;
 
     // Create the keyboard input handler and register the keyboard commands
     myKeyboard.registerCommand(input.KeyEvent.DOM_VK_LEFT, function(){ snake.changeDirection('left')});
@@ -52,10 +56,12 @@ function gameOver() {
         ls.set('highscores', {field: 'scores', value: highscores.scores});
     }
     showScreen(highScores);
+    initialize();
 }
 
-function update(elapsedTime) {
+function gameUpdate(elapsedTime) {
     myKeyboard.update(elapsedTime);
+
     var successfulMove = true;
     timeSinceLastMove += elapsedTime;
     if(timeSinceLastMove > moveInterval) {
@@ -68,10 +74,45 @@ function update(elapsedTime) {
     }
 }
 
-function render() {
+function gameRender() {
     graphics.clear();
     grid.render();
     snake.render();
+}
+
+let countdownTime = 0;
+function countdownUpdate(elapsedTime) {
+    countdownTime += elapsedTime;
+}
+
+function countdownRender() {
+    gameRender();
+    if(countdownTime < 1000) {
+        graphics.drawText({
+            text: 'Start in 3!',
+            x: 400,
+            y: 400,
+            fill: '#fff'
+        });
+    } else if (countdownTime < 2000) {
+        graphics.drawText({
+            text: 'Start in 2!',
+            x: 400,
+            y: 400,
+            fill: '#fff'
+        });
+    } else if (countdownTime < 3000) {
+        graphics.drawText({
+            text: 'Start in 1!',
+            x: 400,
+            y: 400,
+            fill: '#fff'
+        });
+    } else {
+        countdownTime = 0;
+        render = gameRender;
+        update = gameUpdate;
+    }
 }
 
 //------------------------------------------------------------------

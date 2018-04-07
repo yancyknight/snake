@@ -15,6 +15,7 @@ function getRandomBlankCell() {
 }
 
 function initialize() {
+    cells.length = 0;
     for(let i = 0; i < 50; i++) {
         let row = [];
         for(let j = 0; j < 50; j++) {
