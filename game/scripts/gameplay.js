@@ -6,9 +6,11 @@ const mainMenu = require('./mainmenu');
 const grid = require('./gameObjects/grid');
 const snake = require('./gameObjects/snake');
 
-var myKeyboard = input.Keyboard(),
-    cancelNextRequest = false,
-    lastTimeStamp;
+let myKeyboard = input.Keyboard();
+let cancelNextRequest = false;
+let lastTimeStamp;
+let moveInterval = 150;
+let timeSinceLastMove = 0;
 
 function initialize() {
     console.log('game initializing...');
@@ -26,7 +28,12 @@ function initialize() {
 
 function update(elapsedTime) {
     myKeyboard.update(elapsedTime);
-    snake.update();
+
+    timeSinceLastMove += elapsedTime;
+    if(timeSinceLastMove > moveInterval) {
+        snake.update(elapsedTime);
+        timeSinceLastMove -= moveInterval;
+    }
 }
 
 function render() {
